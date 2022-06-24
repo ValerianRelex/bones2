@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    template:
+        `
+            <nav>
+                <img [src]="imgUrl">
+            </nav>
+            <div>
+                <router-outlet></router-outlet>
+            </div>
+        `
 })
 export class AppComponent {
-  title = 'Bones2';
+    imgUrl: string = 'https://selosovetov.ru/wp-content/uploads/2016/11/kosti_low.jpg';
+
+    [testMe]={{testMe}}
+
 }

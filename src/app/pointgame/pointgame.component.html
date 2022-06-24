@@ -1,0 +1,13 @@
+<p>pointgame works! {{isPointGame}}</p>
+<strong>Ваш поинт = {{point}}</strong>
+
+<!-- Здесь пошла логика игры поинтГейм -->
+<div>
+    <button [hidden]="!isPointGame" (click)="pointThrow()" type="submit">Бросок!</button>
+    <p *ngIf="isPointThrow">Выпала комбинация: {{craps.value1Crap}} + {{craps.value2Crap}} = {{craps.totalValue}}</p>
+</div>
+<div class="endGame" *ngIf="!isPointGame" >
+<!-- Здесь надо сделать привязку к параграфу и выводить текст в зависимости от Проигрыша или Выигрыша   -->
+    <p>{{gameResult}}</p>
+    <button type="submit" (click)="sendToParent()">ОК</button>
+</div>

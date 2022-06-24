@@ -15,6 +15,4 @@ import {Component} from '@angular/core';
 export class AppComponent {
     imgUrl: string = 'https://selosovetov.ru/wp-content/uploads/2016/11/kosti_low.jpg';
 
-    [testMe]={{testMe}}
-
 }

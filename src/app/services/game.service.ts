@@ -13,8 +13,8 @@ export class GameService {
 
   constructor() { }
 
-  pointGameShort(point: number) {
-
+  pointShortResult(point: number, total: number): boolean {
+    return point === total;
   }
 
   firstShotResult(total: number): number {

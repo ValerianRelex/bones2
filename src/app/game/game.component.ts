@@ -16,9 +16,10 @@ export class GameComponent implements OnInit{
   player: User = {
     balance: 0, name: "", point: 0
   };
-  bet!: number;
   isThrow: boolean = false;
   userWin: boolean = false;
+  isPointGame: boolean = false;
+  bet!: number;
   craps1!: number;
   craps2!: number;
   total!: number;
@@ -39,12 +40,23 @@ export class GameComponent implements OnInit{
     );
   }
 
+  GetOutputVal($event: any) {
+    console.log('Из дочернего');
+    console.log($event);
+    this.isPointGame = !this.isPointGame;
+    this.isThrow = false;
+    // this.player.balance = this.player.balance + (this.bet * 2); // надо как-то принимать результат поинтГейма
+  }
+
   onSubmitForm(form: NgForm) {
+    this.isThrow = true;
     this.changeBalance();
     this.makeFirstShort();
 
     if (this.getResultFirstShort() != 0) {
       // тут будет логика запуска компоненты, в которой игра продолжится с поинтом
+      this.isPointGame = true;
+
       console.log('ПоинтГейм!');
       console.log('point = ' + this.point);
       return;
@@ -66,7 +78,6 @@ export class GameComponent implements OnInit{
   }
 
   makeFirstShort() {
-    this.isThrow = true;
 
     this.craps1 = this.gameService.getNumber();
     this.craps2 = this.gameService.getNumber();
@@ -74,6 +85,7 @@ export class GameComponent implements OnInit{
   }
 
   getResultFirstShort(): number {
+
     this.point = this.gameService.firstShotResult(this.total);
     if (this.point === GameService.WIN) {
       this.userWin = true;

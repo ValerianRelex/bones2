@@ -12,14 +12,17 @@
         <div>Ваш баланс: {{player.balance}}</div>
 
 <!--дописать валидаторы --- чтоб вводились только числа, и число не превышало баланса -->
-        <label>Ваша ставка</label><input name="bet" [(ngModel)]="bet" required/>
-        <button type="submit">Кинуть кости</button>
+        <label>Ваша ставка</label><input name="bet" [(ngModel)]="bet" required [readOnly]="isPointGame" />
+        <button type="submit" [disabled]="isPointGame">Кинуть кости</button>
     </form>
-    <div *ngIf=isThrow>
+    <div *ngIf="isThrow">
         <strong>Выпавшая комбинация:</strong>
         <p>Первый кубик = {{craps1}}</p>
         <p>Второк кубик = {{craps2}}</p>
         <p>Сумма чисел = {{total}}</p>
-        <p>Итог раунда - </p>
+    </div>
+<!--    Здесь будет дочерний компонент в котором будет осуществляться поинтГейм     -->
+    <div *ngIf="isPointGame">
+        <app-pointgame [isPointGame]="isPointGame" [point]="point" (outputToParent)="GetOutputVal($event)"> </app-pointgame>
     </div>
 </div>

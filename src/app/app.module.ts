@@ -10,10 +10,11 @@ import { RulesComponent } from './rules/rules.component';
 import { GameComponent } from './game/game.component';
 import { HellopageComponent } from './hellopage/hellopage.component';
 import { GameService } from "./services";
+import { PointgameComponent } from './pointgame/pointgame.component';
 
 @NgModule({
     declarations: [
-        AppComponent, RulesComponent, GameComponent, HellopageComponent
+        AppComponent, RulesComponent, GameComponent, HellopageComponent, PointgameComponent
     ],
     imports: [
         BrowserModule,

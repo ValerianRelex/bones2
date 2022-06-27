@@ -9,5 +9,5 @@
 <div class="endGame" *ngIf="!isPointGame" >
 <!-- Здесь надо сделать привязку к параграфу и выводить текст в зависимости от Проигрыша или Выигрыша   -->
     <p>{{gameResult}}</p>
-    <button type="submit" (click)="sendToParent()">ОК</button>
+    <button type="submit" (click)="sendToParent(gameResult)">ОК</button>
 </div>

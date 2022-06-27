@@ -26,10 +26,12 @@ export class PointgameComponent {
     this.craps = {value1Crap: 0, value2Crap: 0, totalValue: 0};
   }
 
-  @Output() outputToParent = new EventEmitter<string>();
-  sendToParent() {
-    console.log('aaaaaaaa');
-    this.outputToParent.emit();
+  // если до этого была магия, то здесь - совсем чудеса )))
+  @Output() outputToParent = new EventEmitter<boolean>();
+
+  sendToParent(gameResult: any) {
+    console.log(gameResult);
+    this.outputToParent.emit(this.getPointGameResult());
   }
 
   pointThrow() {
@@ -47,19 +49,22 @@ export class PointgameComponent {
       console.log('Вы проиграли! ');
 
       this.gameResult = PointgameComponent.LOSS_POINT_GAME;
-      // this.isPointThrow = false; // вынести повторяющийся код в отдельный метод типа - endPointGame
       this.isPointGame = false;
       return;
     }
+
     if (this.craps.totalValue === this.point) {
       console.log('Вы победили! ');
 
       this.gameResult = PointgameComponent.WIN_POINT_GAME;
-      // this.isPointThrow = false;
       this.isPointGame = false;
       return;
     }
 
     console.log('Еще бросок!');
+  }
+
+  getPointGameResult(): boolean {
+    return this.gameResult === PointgameComponent.WIN_POINT_GAME;
   }
 }

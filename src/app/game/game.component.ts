@@ -40,17 +40,21 @@ export class GameComponent implements OnInit{
     );
   }
 
-  GetOutputVal($event: any) {
+  GetOutputVal(gameResult: any) {
     console.log('Из дочернего');
-    console.log($event);
+    console.log(gameResult);
     this.isPointGame = !this.isPointGame;
     this.isThrow = false;
-    // this.player.balance = this.player.balance + (this.bet * 2); // надо как-то принимать результат поинтГейма
+
+    if (gameResult) {
+
+      this.player.balance += this.bet * 2; // надо как-то принимать результат поинтГейма
+    }
   }
 
   onSubmitForm(form: NgForm) {
     this.isThrow = true;
-    this.changeBalance();
+    this.reduceBalance();
     this.makeFirstShort();
 
     if (this.getResultFirstShort() != 0) {
@@ -61,10 +65,11 @@ export class GameComponent implements OnInit{
       console.log('point = ' + this.point);
       return;
     }
+
     if (this.userWin) {
       // вывод поздравления!
       console.log('Поздравляю! Победа! === ' + this.point);
-      this.player.balance = this.player.balance + (this.bet * 2); // не забываем о пополнение баланса в случае выигрыша.
+      this.player.balance += this.bet * 2; // не забываем о пополнение баланса в случае выигрыша.
       this.userWin = false;
     } else
     {
@@ -98,8 +103,8 @@ export class GameComponent implements OnInit{
     return this.point;
   }
 
-  changeBalance() {
+  reduceBalance() {
     // добавить проверку на достаточное количество
-    this.player.balance = this.player.balance - this.bet;
+    this.player.balance -= this.bet;
   }
 }

@@ -37,16 +37,10 @@ export class PointgameComponent {
   pointThrow() {
     this.isPointThrow = true;
     this.craps.value1Crap = this.gameservice.getNumber();
-    console.log('кубик1 = ' + this.craps.value1Crap);
     this.craps.value2Crap = this.gameservice.getNumber();
-    console.log('кубик2 = ' + this.craps.value2Crap);
     this.craps.totalValue = this.craps.value1Crap + this.craps.value2Crap;
-    console.log('сумма чисел = ' + this.craps.totalValue);
-
-    console.log('zzz');
 
     if (this.craps.totalValue === 7) {
-      console.log('Вы проиграли! ');
 
       this.gameResult = PointgameComponent.LOSS_POINT_GAME;
       this.isPointGame = false;
@@ -54,7 +48,6 @@ export class PointgameComponent {
     }
 
     if (this.craps.totalValue === this.point) {
-      console.log('Вы победили! ');
 
       this.gameResult = PointgameComponent.WIN_POINT_GAME;
       this.isPointGame = false;

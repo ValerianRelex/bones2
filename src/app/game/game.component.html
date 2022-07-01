@@ -3,24 +3,55 @@
     <a routerLink="/rules">Правила</a>
 </nav>
 <hr>
-<h2>game works!</h2>
 <div class="form-control-lg">
-    <h6>Добро пожаловать и успехов {{player.name}} !</h6>
+
+    <div id="testContent" class="myStyle">
+
+      <script>
+        alert( elem.getAttribute('testContent') ); // (1) 'Elephant', атрибут получен
+
+        var attrs = elem.attributes; // (4) можно получить коллекцию атрибутов
+        for (var i = 0; i < attrs.length; i++) {
+          alert( attrs[i].name + " = " + attrs[i].value );
+        }
+      </script>
+
+        <h2>Добро пожаловать и успехов {{player.name}} !</h2>
+        <br>
+    </div>
 
     <form #gameForm="ngForm" (ngSubmit)="onSubmitForm(gameForm)">
 
         <div>Ваш баланс: {{player.balance}}</div>
 
-<!--дописать валидаторы --- чтоб вводились только числа, и число не превышало баланса -->
-        <label>Ваша ставка</label><input name="bet" [(ngModel)]="bet" required [readOnly]="isPointGame" />
-        <button type="submit" [disabled]="isPointGame">Кинуть кости</button>
+        <label>Ваша ставка</label>
+        <input name="bet" [(ngModel)]="bet" required pattern="^[1-9]\d*$" resetInput [disabled]="isPointGame" />
+        <button type="submit" [disabled]="isPointGame || gameForm.invalid || incorrectBet ">Кинуть кости</button>
+        <div class="alert alert-danger"
+            *ngIf="incorrectBet">
+                Неверно введена ставка! Введите сумму не превыщающую ваш баланс!
+        </div>
     </form>
+
     <div *ngIf="isThrow">
         <strong>Выпавшая комбинация:</strong>
         <p>Первый кубик = {{craps1}}</p>
         <p>Второк кубик = {{craps2}}</p>
         <p>Сумма чисел = {{total}}</p>
     </div>
+
+<!--    Вывод поздравления     -->
+    <div class="win" *ngIf="(!isPointGame) && (userWin) && (isThrow)">
+        {{win}}
+        <button type="submit" (click)="onGameResult()">ОК</button>
+    </div>
+
+<!--    Вывод сожаления о проигрыше-->
+    <div class="loss" *ngIf="(!isPointGame) && (!userWin) && (isThrow)">
+        {{loss}}
+        <button type="submit" (click)="onGameResult()">ОК</button>
+    </div>
+
 <!--    Здесь будет дочерний компонент в котором будет осуществляться поинтГейм     -->
     <div *ngIf="isPointGame">
         <app-pointgame [isPointGame]="isPointGame" [point]="point" (outputToParent)="GetOutputVal($event)"> </app-pointgame>

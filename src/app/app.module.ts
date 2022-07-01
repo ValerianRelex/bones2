@@ -11,10 +11,11 @@ import { GameComponent } from './game/game.component';
 import { HellopageComponent } from './hellopage/hellopage.component';
 import { GameService } from "./services";
 import { PointgameComponent } from './pointgame/pointgame.component';
+import {ResetInput} from "./directives/reset-input.directive";
 
 @NgModule({
     declarations: [
-        AppComponent, RulesComponent, GameComponent, HellopageComponent, PointgameComponent
+        AppComponent, RulesComponent, GameComponent, HellopageComponent, PointgameComponent, ResetInput
     ],
     imports: [
         BrowserModule,

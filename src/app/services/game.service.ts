@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {GameComponent} from "../game/game.component";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,6 @@ export class GameService {
   public static readonly LOSS = 12;
   winCombo: number[] = [7, 11] ;
   lossCombo: number[] = [2, 8, 12];
-  // total!: number;
 
   constructor() { }
 

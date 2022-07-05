@@ -14,24 +14,14 @@ import {PointgameComponent} from "../pointgame/pointgame.component";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent implements OnInit, OnDestroy, DoCheck {
-    ngDoCheck(): void {
-        if (!this.isBalanceEnough() && !this.isThrow) {
-            // маршрутизация на страницу GameOver с предложением "Начать игру заново? Да или Нет!?"
-            console.log('Баланс тю-тю! Однако - гейм овер!')
-        }
-    }
-
-    ngOnDestroy(): void {
-        console.log('ушел со странички');
-    }
-
     player!: User;
+    private querySubscription!: Subscription;
 
     isThrow: boolean = false;
-    isPointGame: boolean = false;
-    userWin: boolean = false;
     incorrectBet: boolean = false;
+    isPointGame: boolean = false;
 
+    userWin: boolean = false;
     craps1!: number;
     craps2!: number;
     total!: number;
@@ -41,8 +31,6 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
 
     win: string = PointgameComponent.WIN_POINT_GAME;
     loss: string = PointgameComponent.LOSS_POINT_GAME;
-
-    private querySubscription!: Subscription;
 
     constructor(private route: ActivatedRoute, private gameService: GameService) {
     }
@@ -61,7 +49,17 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
                 }
             }
         );
+    }
 
+    ngDoCheck(): void {
+        if (!this.isBalanceEnough() && !this.isThrow) {
+            // маршрутизация на страницу GameOver с предложением "Начать игру заново? Да или Нет!?"
+            console.log('Баланс тю-тю! Однако - гейм овер!');
+        }
+    }
+
+    ngOnDestroy(): void {
+        console.log('ушел со странички');
     }
 
     // получение результата поинтГейма из дочернего компонента
@@ -98,7 +96,6 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
         this.isThrow = true;
 
         this.reduceBalance();
-
         this.makeFirstShort();
 
         if (this.getResultFirstShort() != 0) {
@@ -121,9 +118,13 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     makeFirstShort() {
-        this.craps1 = this.gameService.getNumber();
-        this.craps2 = this.gameService.getNumber();
+        this.craps1 = this.getNumber();
+        this.craps2 = this.getNumber();
         this.total = this.craps1 + this.craps2;
+    }
+
+    private getNumber(): number {
+        return this.gameService.getNumber();
     }
 
     getResultFirstShort(): number {

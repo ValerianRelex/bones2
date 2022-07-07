@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class GameService {
   public static readonly LOSS = 12;
   winCombo: number[] = [7, 11] ;
   lossCombo: number[] = [2, 8, 12];
-
+  private _player!: User;
   constructor() { }
 
   pointShortResult(point: number, total: number): boolean {
@@ -26,5 +27,13 @@ export class GameService {
 
   getNumber() {
     return Math.floor((Math.random() * 6) + 1); // от 1 до 6
+  }
+
+  get player(): User {
+    return this._player;
+  }
+
+  set player(value: User) {
+    this._player = value;
   }
 }

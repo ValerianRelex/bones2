@@ -1,6 +1,9 @@
 <nav>
-    <a routerLink="/game">Игра</a>
-    <a routerLink="/rules">Правила</a>
+    <a routerLink="/game" routerLinkActive="active">Игра</a>
+<!--    так, как сделано ниже - не работает, т.к. у тега <a> нет такого свойства, нужно найт альтернативный вариант     -->
+<!--    <a routerLink="/rules" routerLinkActive="active" [disabled]="isPointGame">Правила</a>-->
+    <a routerLink="/rules" routerLinkActive="active">Правила</a>
+    <a routerLink="/" routerLinkActive="active">Начать сначала</a>
 </nav>
 <hr>
 <div class="form-control-lg">

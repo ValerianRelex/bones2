@@ -15,6 +15,13 @@ const app = express();
 
 const port = 3000;
 
+// инициализируем библиотеку авторизации и укажем, что будем использовать сессии
+// app.use(session({ … }));
+app.use(passport.initialize());
+app.use(passport.session());
+// эта запись не совсем понятна...
+require('./config/passport')(passport);
+
 app.use(cors());
 
 // парсер для получения данных из POST запросов

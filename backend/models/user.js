@@ -43,3 +43,10 @@ module.exports.addUser = function (newUser, callback) {
         });
     })
 }
+
+module.exports.comparePassw = function(passwFromUser, passwFromDB, callBack) {
+    crypt.compare(passwFromUser, passwFromDB, (err, isMatch) => {
+        if (err) throw err;
+        callBack(isMatch);
+    });
+}

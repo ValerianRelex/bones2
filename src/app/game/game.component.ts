@@ -49,6 +49,12 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
                 }
             }
         );
+        // альтернативный способ, по плану - реализовать работу с БД.
+        if (!this.player.name) {
+            this.player = this.gameService.player;
+        } else {
+            this.gameService.player = this.player;
+        }
     }
 
     ngDoCheck(): void {

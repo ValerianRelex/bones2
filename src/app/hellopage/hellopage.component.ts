@@ -8,8 +8,6 @@ import {Router} from "@angular/router";
     styleUrls: ['./hellopage.component.scss']
 })
 export class HellopageComponent implements OnInit {
-
-    @Input() testMe: any;
     playerName!: string;
 
     constructor(public router: Router) {
@@ -17,9 +15,12 @@ export class HellopageComponent implements OnInit {
 
     ngOnInit(): void {
     }
-
     startForm: FormGroup = new FormGroup({
-        playerNameControl: new FormControl('', [Validators.required, Validators.minLength(3)])
+        playerNameControl: new FormControl('', [
+            Validators.required,
+            // Validators.minLength(3), // уже встроен в регулярку
+            Validators.pattern('^[a-zA-Z]{3,16}$'),
+        ])
     })
 
     submitStartForm() {
@@ -33,7 +34,6 @@ export class HellopageComponent implements OnInit {
     }
 
     getPlayerName(): string {
-        // console.log(JSON.stringify(this.startForm));
         return this.startForm.controls['playerNameControl'].value;
     }
 }

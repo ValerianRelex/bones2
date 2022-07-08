@@ -1,12 +1,11 @@
-<p>hellopage works!</p>
-
 <div class="container" >
-
   <form [formGroup]="startForm" (ngSubmit)="submitStartForm()" >
-      <div>Представьтесь, пожалуйста! {{testMe}}</div>
+      <div>Представьтесь, пожалуйста! </div>
       <div>Ваше имя: <input name="playerName" formControlName="playerNameControl" /> </div>
       <!--        кнопка недоступна, пока не введено имя игру не начать!    -->
-      <div *ngIf="startForm.invalid && startForm.touched" style="color: brown">Необходимо ввести имя!</div>
+      <div *ngIf="startForm.invalid && (startForm.dirty || startForm.touched)" style="color: brown">
+       Необходимо ввести имя! (разрешены только символы)
+      </div>
       <button [disabled]="startForm.invalid" type="submit">Начнем игру, {{getPlayerName()}}!</button>
   </form>
 </div>

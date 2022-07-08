@@ -19,7 +19,7 @@ export class HellopageComponent implements OnInit {
         playerNameControl: new FormControl('', [
             Validators.required,
             // Validators.minLength(3), // уже встроен в регулярку
-            Validators.pattern('^[a-zA-Z]{3,16}$'),
+            Validators.pattern('^[a-zA-Zа-яА-Я]{3,16}$'),
         ])
     })
 

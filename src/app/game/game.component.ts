@@ -36,23 +36,25 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
     }
 
     ngOnInit(): void {
-        // магия получения значений из одного компонента в другой, с помощью параметров из URL
-
         this.querySubscription = this.route.queryParams.subscribe(
             (queryParam: any) => {
                 this.player = {
                     name: queryParam['playerName'],
                     point: 0,
+                    balance: 100,
 
-                    // реализовать еще одну строку ввода в форме, где получаем имя пользователя... так же через параметр передать баланс
-                    balance: 100
+                    email: '',
+                    login: '',
+                    password: '',
                 }
             }
         );
-        // альтернативный способ, по плану - реализовать работу с БД.
+
+        // если ушел со странички по маршруту, то при возврате нужно заново проинициализировать переменную, дернув значение из сервиса
         if (!this.player.name) {
             this.player = this.gameService.player;
         } else {
+            console.log('записал в БД - ' + this.player.name)
             this.gameService.player = this.player;
         }
     }

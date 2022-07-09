@@ -1,11 +1,10 @@
-<nav>
-    <a routerLink="/game" routerLinkActive="active">Игра</a>
-<!--    так, как сделано ниже - не работает, т.к. у тега <a> нет такого свойства, нужно найт альтернативный вариант     -->
-<!--    <a routerLink="/rules" routerLinkActive="active" [disabled]="isPointGame">Правила</a>-->
-    <a routerLink="/rules" routerLinkActive="active">Правила</a>
-    <a routerLink="/" routerLinkActive="active">Начать сначала</a>
-</nav>
-<hr>
+<!--<nav>-->
+<!--    <a [routerLink]="['/game']" routerLinkActive="active">Игра</a>-->
+<!--&lt;!&ndash;    так, как сделано ниже - не работает, т.к. у тега <a> нет такого свойства, нужно найт альтернативный вариант     &ndash;&gt;-->
+<!--&lt;!&ndash;    <a routerLink="/rules" routerLinkActive="active" [disabled]="isPointGame">Правила</a>&ndash;&gt;-->
+<!--    <a [routerLink]="['/rules']" routerLinkActive="active">Правила</a>-->
+<!--    <a [routerLink]="['/']" routerLinkActive="active">Начать сначала</a>-->
+<!--</nav>-->
 <div class="form-control-lg">
 
     <div id="testContent" class="myStyle">

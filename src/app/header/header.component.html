@@ -11,8 +11,9 @@
         </ul>
 
         <div class="col-md-3 text-end">
-            <a class="btn btn-outline-primary me-2" [routerLink]="['/auth']">Войти</a>
-            <a class="btn btn-primary" [routerLink]="['/reg']">Регистрация</a>
+            <a *ngIf="!authService.isLogged()" class="btn btn-outline-primary me-2" [routerLink]="['/auth']">Войти</a>
+            <a *ngIf="!authService.isLogged()" class="btn btn-primary" [routerLink]="['/reg']">Регистрация</a>
+            <a *ngIf="authService.isLogged()" class="btn btn-primary" [routerLink]="['/reg']" (click)="authService.logout()">Выйти</a>
         </div>
     </header>
 </div>

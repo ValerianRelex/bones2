@@ -4,8 +4,6 @@ import {FlashMessagesService} from "angular2-flash-messages";
 import {Router} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 
-// import {User} from "../models/user";
-
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
@@ -13,7 +11,7 @@ import {AuthService} from "../services/auth.service";
 })
 export class AuthComponent {
     login: String = '';
-    password: String = '';
+    password!: String;
 
     constructor(
         private checkRegFormService: CheckRegFormService,
@@ -28,6 +26,22 @@ export class AuthComponent {
             password: this.password
         }
 
+        if (this.login=='' || this.login==undefined) {
+            this.messageService.show('Введите имя пользователя!', {
+                cssClass: 'alert-warning',
+                timeout: 5000
+            });
+            return;
+        }
+
+        if (this.password=='' || this.password==undefined) {
+            this.messageService.show('Введите пароль!', {
+                cssClass: 'alert-warning',
+                timeout: 5000
+            });
+            return;
+        }
+
         this.authService.authPlayer(user)
             .subscribe((data: any) => {
                 if (!data.success) {
@@ -36,11 +50,13 @@ export class AuthComponent {
                         timeout: 5000
                     });
                 } else {
-                    this.messageService.show(data.msg, {
+                    this.messageService.show("Вы успешно авторизовались!", {
                         cssClass: 'alert-success',
                         timeout: 5000
                     });
 
+                    this.router.navigate(['/game']);
+                    this.authService.storePlayer(data.user, data.token);
                 }
             });
     }

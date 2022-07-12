@@ -40,32 +40,17 @@ router.post('/auth', (request, response) => {
     const login = request.body.login; // если нет...
     const passw = request.body.password;
 
-    console.log('form BACK-1: ' + request.body.login);
-
     User.getUserByLogin(login, (err, user) => {
-        console.log('form BACK-2: ' + request.body.login + ' = ' + login);
-        if (err) throw err; // тут успешно
-
-        if (!user) return response.json({success: false, msg: "Пользователь " + user + " в БД не найден"})
-
-        console.log('form BACK-3: ' + request.body.password + ' = ' + passw);
+        if (err) throw err;
+        if (!user) return response.json({success: false, msg: "Пользователь " + login + " в БД не найден"})
 
         User.comparePassw(passw, user.password, (err, isMatch) => {
-
-            console.log('form BACK-4 err = ' + err); // почему приходит TRUE? как понять, какая ошибка возникает???
-
            if (err) throw err; // TODO: здесь вылетает
 
-            console.log('form BACK-5 isMatch = ' + isMatch);
-
             if (isMatch) {
-                console.log('form BACK-6');
-
                 const token = jwt.sign(JSON.parse(JSON.stringify(user)), config.secret, {
                     expiresIn: 3600 * 24 // авторизуем пользователя на сутки
                 });
-
-                console.log('form BACK-7 token = ' + token);
 
                 return response.json({
                     success: true,
@@ -78,14 +63,14 @@ router.post('/auth', (request, response) => {
                     }
                 });
             } else
-                return response.json({success: false, msg: "Пароли не совпадают! " + passw})
+                return response.json({success: false, msg: "Пароли не совпадают! "})
         });
     });
 });
 
 // TODO: переадресация на свою страницу игры...
 // если юзер не авторизован, сессия = false, на страничку dashboard - в моем случае пределать, на страницу game его не пустит!!!
-router.get('/dashboard',
+router.get('/game',
     passport.authenticate('jwt', {session: false}),
     (request, response) => {
         response.send('Личный кабинет пользователя');

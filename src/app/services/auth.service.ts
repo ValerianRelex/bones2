@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpHeaders, HttpClient} from '@angular/common/http';
 
-import {map} from 'rxjs/operators';
 import {User} from "../models/user";
 import {TestDto} from "../models/testDto";
 
@@ -9,6 +8,9 @@ import {TestDto} from "../models/testDto";
     providedIn: 'root'
 })
 export class AuthService {
+
+    player: any;
+    token: any;
 
     constructor(private http: HttpClient) {
     }
@@ -20,23 +22,38 @@ export class AuthService {
         return this.http.post<TestDto>(
             'http://localhost:3000/account/reg',
             user,
-            {headers: headers}); // ура, победил, оказывается HttpClient уже возвращает обьект в виде json и ненужно его переопределять
-        // либо есть вариант, но в нем нужно явно указывать какой тип будем получать. Официал дока рулит.
-
-        // {headers: headers}).pipe(map((response: any) => response.json())); // возврат ошибки - ERROR TypeError: response.json is not a function
-        // {headers: headers}).pipe(map((response: any) => response.json())); // TODO: пробую без мапы - увидеть ошибку (без мапы не принимает обьект)
-        // {headers: headers}).map(res => res.json()); // так не работает
+            {headers: headers});
     }
 
     authPlayer(user: any) {
         let headers = new HttpHeaders();
-
-        console.log(user);
 
         headers.append('Content-Type', 'application/json')
         return this.http.post(
             'http://localhost:3000/account/auth',
             user,
             {headers: headers});
+    }
+
+    storePlayer(user: any, token: String) {
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', token.toString());
+        this.player = user;
+        this.token = token;
+    }
+
+    logout() {
+        this.token = null;
+        this.player = null;
+        localStorage.clear();
+    }
+
+    isLogged() {
+        console.log('isLogged => ' + localStorage.getItem('token'));
+        if (localStorage.getItem('token')!=undefined) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

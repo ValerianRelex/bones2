@@ -45,14 +45,8 @@ module.exports.addUser = function (newUser, callback) {
 }
 
 module.exports.comparePassw = function(passwFromUser, passwFromDB, callBack) {
-
-    console.log('from-1 user.js ===> '+ passwFromDB + ' = ' + passwFromUser);
-
     crypt.compare(passwFromUser, passwFromDB, (err, isMatch) => {
-        console.log('from-2 user.js ===> '+ passwFromDB + ' = ' + passwFromUser);
         if (err) throw err;
-
-        console.log('from-3 callback вернет isMatch = ' + isMatch + '; err = ' + err);
         callBack(null, isMatch);
     });
 }

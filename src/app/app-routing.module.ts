@@ -6,10 +6,12 @@ import { HellopageComponent } from "./hellopage/hellopage.component";
 import {AuthComponent} from "./auth/auth.component";
 import {RegComponent} from "./reg/reg.component";
 
+import { IsLoggedGuard } from "./isLogged.guard";
+
 const routes: Routes = [
   {path: '', component: HellopageComponent},
   {path: 'rules', component: RulesComponent},
-  {path: 'game', component: GameComponent},
+  {path: 'game', component: GameComponent, canActivate: [IsLoggedGuard]},
   {path: 'reg', component: RegComponent},
   {path: 'auth', component: AuthComponent},
   {path: '**', redirectTo: '/'}

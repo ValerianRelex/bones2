@@ -21,6 +21,7 @@ import { CheckRegFormService } from "./services/check-reg-form.service";
 import { FlashMessagesModule } from "angular2-flash-messages";
 import { AuthService } from "./services/auth.service";
 import { HttpClientModule } from "@angular/common/http";
+import {IsLoggedGuard} from "./isLogged.guard";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,7 @@ import { HttpClientModule } from "@angular/common/http";
         FlashMessagesModule.forRoot(),
         HttpClientModule
     ],
-    providers: [GameService, CheckRegFormService, AuthService],
+    providers: [GameService, CheckRegFormService, AuthService, IsLoggedGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

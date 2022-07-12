@@ -19,6 +19,8 @@ import { HeaderComponent } from './header/header.component';
 import { CheckRegFormService } from "./services/check-reg-form.service";
 
 import { FlashMessagesModule } from "angular2-flash-messages";
+import { AuthService } from "./services/auth.service";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
     declarations: [
@@ -38,9 +40,10 @@ import { FlashMessagesModule } from "angular2-flash-messages";
         NgbModule,
         ReactiveFormsModule,
         FormsModule,
-        FlashMessagesModule.forRoot()
+        FlashMessagesModule.forRoot(),
+        HttpClientModule
     ],
-    providers: [GameService, CheckRegFormService],
+    providers: [GameService, CheckRegFormService, AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

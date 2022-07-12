@@ -21,11 +21,17 @@ router.post('/reg', (request, response) => {
 
     // здесь непонял, что за user в коллбэк функции - откуда берется
     User.addUser(newUserReg, (err, user) => {
-        if (err)
+        if (err) {
+            console.log("ошибка добавления в БД на стороне Бэка");
+            // response.json({success: false, msg: "Пользователь не был добавлен. ошибка - "});
             response.json({success: false, msg: "Пользователь не был добавлен. ошибка - ", err: err})
-        else
+        }
+        else {
+            console.log("Обьект добавлен в БД на стороне Бэка");
             // тут непонятрный момент и эксперимент - добавил третье поле... ошибка и юзер... посмотрю что будет выводить
+            // response.json({success: true, msg: "Новый пользователь успешно добавлен - "})
             response.json({success: true, msg: "Новый пользователь успешно добавлен - ", user: user})
+        }
     });
 });
 

@@ -36,20 +36,36 @@ router.post('/reg', (request, response) => {
 });
 
 router.post('/auth', (request, response) => {
-    const login = request.get('login'); // TODO: должно сработать и так!
-    // const login = request.body.login; // если нет...
+    // const login = request.get('login'); // TODO: должно сработать и так!
+    const login = request.body.login; // если нет...
     const passw = request.body.password;
+
+    console.log('form BACK-1: ' + request.body.login);
+
     User.getUserByLogin(login, (err, user) => {
-        if (err) throw err;
-        if (!user)
-            return response.json({success: false, msg: "Пользователь " + user + " в БД не найден"})
+        console.log('form BACK-2: ' + request.body.login + ' = ' + login);
+        if (err) throw err; // тут успешно
+
+        if (!user) return response.json({success: false, msg: "Пользователь " + user + " в БД не найден"})
+
+        console.log('form BACK-3: ' + request.body.password + ' = ' + passw);
 
         User.comparePassw(passw, user.password, (err, isMatch) => {
-            if (err) throw err;
+
+            console.log('form BACK-4 err = ' + err); // почему приходит TRUE? как понять, какая ошибка возникает???
+
+           if (err) throw err; // TODO: здесь вылетает
+
+            console.log('form BACK-5 isMatch = ' + isMatch);
+
             if (isMatch) {
-                const token = jwt.sign(user, config.secret, {
+                console.log('form BACK-6');
+
+                const token = jwt.sign(JSON.parse(JSON.stringify(user)), config.secret, {
                     expiresIn: 3600 * 24 // авторизуем пользователя на сутки
                 });
+
+                console.log('form BACK-7 token = ' + token);
 
                 return response.json({
                     success: true,

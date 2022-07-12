@@ -1,1 +1,6 @@
-<p>auth works!</p>
+<h1>Авторизация пользователя</h1>
+<form (submit)="loginPlayer()">
+    <input type="text" name="login" [(ngModel)]="login" placeholder="Введите логин" class="form-control">
+    <input type="password" name="password" [(ngModel)]="password" placeholder="Введите пароль" class="form-control">
+    <button type="submit" class="btn btn-success">Начать игру!</button>
+</form>

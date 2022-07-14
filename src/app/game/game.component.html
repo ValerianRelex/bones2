@@ -1,10 +1,3 @@
-<!--<nav>-->
-<!--    <a [routerLink]="['/game']" routerLinkActive="active">Игра</a>-->
-<!--&lt;!&ndash;    так, как сделано ниже - не работает, т.к. у тега <a> нет такого свойства, нужно найт альтернативный вариант     &ndash;&gt;-->
-<!--&lt;!&ndash;    <a routerLink="/rules" routerLinkActive="active" [disabled]="isPointGame">Правила</a>&ndash;&gt;-->
-<!--    <a [routerLink]="['/rules']" routerLinkActive="active">Правила</a>-->
-<!--    <a [routerLink]="['/']" routerLinkActive="active">Начать сначала</a>-->
-<!--</nav>-->
 <div class="form-control-lg">
 
     <div id="testContent" class="myStyle">
@@ -18,9 +11,11 @@
 
         <label>Ваша ставка</label>
         <input name="bet" [(ngModel)]="bet" required pattern="^[1-9]\d*$" resetInput [disabled]="isPointGame" />
+
+<!--        TODO: с помощью элемента DOM получить доступ к кнопке и блокировать ее пока не нажата кнопка ОК в выводе результата раунда  -->
         <button type="submit" [disabled]="isPointGame || gameForm.invalid || incorrectBet ">Кинуть кости</button>
-        <div class="alert alert-danger"
-            *ngIf="incorrectBet">
+
+        <div class="alert alert-danger" *ngIf="incorrectBet">
                 Неверно введена ставка! Введите сумму не превыщающую ваш баланс!
         </div>
     </form>
@@ -32,13 +27,13 @@
         <p>Сумма чисел = {{total}}</p>
     </div>
 
-<!--    Вывод поздравления     -->
+<!--    Вывод поздравления о выигрыше в текущем раунде  -->
     <div class="win" *ngIf="(!isPointGame) && (userWin) && (isThrow)">
         {{win}}
         <button type="submit" (click)="onGameResult()">ОК</button>
     </div>
 
-<!--    Вывод сожаления о проигрыше-->
+<!--    Вывод сожаления о проигрыше в текущем раунде    -->
     <div class="loss" *ngIf="(!isPointGame) && (!userWin) && (isThrow)">
         {{loss}}
         <button type="submit" (click)="onGameResult()">ОК</button>
@@ -47,5 +42,12 @@
 <!--    Здесь будет дочерний компонент в котором будет осуществляться поинтГейм     -->
     <div *ngIf="isPointGame">
         <app-pointgame [isPointGame]="isPointGame" [point]="point" (outputToParent)="GetOutputVal($event)"> </app-pointgame>
+    </div>
+
+    <div *ngIf="!this.isBalanceEnough() && !this.isThrow" class="form-control">
+            <h1> GAME OVER !!! </h1>
+            <strong> Для продолжения выберите один из вариантов: </strong>
+            <button type="button" (click)="clickNewGame()" class="btn btn-primary">Начнем игру заново!</button>
+            <button type="button" (click)="clickCancelGame()" class="btn btn-primary">Покинуть игровую комнату</button>
     </div>
 </div>

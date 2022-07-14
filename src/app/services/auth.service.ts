@@ -49,7 +49,6 @@ export class AuthService {
     }
 
     isLogged() {
-        console.log('isLogged => ' + localStorage.getItem('token'));
         if (localStorage.getItem('token')!=undefined) {
             return true;
         } else {

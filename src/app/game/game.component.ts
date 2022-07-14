@@ -1,11 +1,12 @@
-import {ChangeDetectionStrategy, Component, DoCheck, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 
 import {User} from "../models/user";
 import {GameService} from "../services";
 import {PointgameComponent} from "../pointgame/pointgame.component";
+import {AuthService} from "../services/auth.service";
 
 @Component({
     selector: 'app-game',
@@ -13,7 +14,7 @@ import {PointgameComponent} from "../pointgame/pointgame.component";
     styleUrls: ['./game.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameComponent implements OnInit, OnDestroy, DoCheck {
+export class GameComponent implements OnInit {
     player!: User;
     private querySubscription!: Subscription;
 
@@ -32,7 +33,12 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
     win: string = PointgameComponent.WIN_POINT_GAME;
     loss: string = PointgameComponent.LOSS_POINT_GAME;
 
-    constructor(private route: ActivatedRoute, private gameService: GameService) {
+    constructor(
+        private route: ActivatedRoute,
+        private gameService: GameService,
+        private authService: AuthService,
+        private router: Router
+    ) {
     }
 
     ngOnInit(): void {
@@ -52,22 +58,12 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
 
         // если ушел со странички по маршруту, то при возврате нужно заново проинициализировать переменную, дернув значение из сервиса
         if (!this.player.name) {
+            console.log('записал 1 - ' + this.gameService.player.name)
             this.player = this.gameService.player;
         } else {
-            console.log('записал в БД - ' + this.player.name)
+            console.log('записал 2 - ' + this.player.name)
             this.gameService.player = this.player;
         }
-    }
-
-    ngDoCheck(): void {
-        if (!this.isBalanceEnough() && !this.isThrow) {
-            // маршрутизация на страницу GameOver с предложением "Начать игру заново? Да или Нет!?"
-            console.log('Баланс тю-тю! Однако - гейм овер!');
-        }
-    }
-
-    ngOnDestroy(): void {
-        console.log('ушел со странички');
     }
 
     // получение результата поинтГейма из дочернего компонента
@@ -76,7 +72,6 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
         this.isThrow = false;
 
         if (gameResult) {
-
             this.player.balance += this._bet * 2;
         }
     }
@@ -121,7 +116,7 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
 
     }
 
-    private isBalanceEnough(): boolean {
+    isBalanceEnough(): boolean {
         return this.player.balance > 0;
     }
 
@@ -159,5 +154,16 @@ export class GameComponent implements OnInit, OnDestroy, DoCheck {
     onGameResult() {
         this.isThrow = false;
         // здесь логика проверки баланса и очистка поля, если баланс равен нулю... ну и вывод сообщения о том, что игра закончена
+    }
+
+    clickNewGame() {
+        this.player.balance = 100;
+        this._bet = 0;
+        this.router.navigate(['game']);
+    }
+
+    clickCancelGame() {
+        this.authService.logout();
+        this.router.navigate(['reg']);
     }
 }

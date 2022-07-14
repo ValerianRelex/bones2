@@ -5,9 +5,8 @@
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a [routerLink]="['/game']" routerLinkActive="active" class="me-lg-2">Игра</a></li>
-            <li><a [routerLink]="['/rules']" routerLinkActive="active" class="me-lg-2">Правила</a></li>
-            <li><a [routerLink]="['/']" routerLinkActive="active" class="m-lg-3" >Начать сначала</a></li>
+            <li><a *ngIf="authService.isLogged()" [routerLink]="['/game']" routerLinkActive="active" class="me-lg-2">Игра</a></li>
+            <li><a *ngIf="authService.isLogged()" [routerLink]="['/rules']" routerLinkActive="active" class="me-lg-2">Правила</a></li>
         </ul>
 
         <div class="col-md-3 text-end">

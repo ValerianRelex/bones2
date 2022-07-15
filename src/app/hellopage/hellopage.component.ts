@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 
@@ -19,7 +19,7 @@ export class HellopageComponent implements OnInit {
         playerNameControl: new FormControl('', [
             Validators.required,
             // Validators.minLength(3), // уже встроен в регулярку
-            Validators.pattern('^[a-zA-Z]{3,16}$'),
+            Validators.pattern('^[a-zA-Zа-яА-Я]{3,16}$'),
         ])
     })
 

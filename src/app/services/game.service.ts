@@ -10,6 +10,7 @@ export class GameService {
   winCombo: number[] = [7, 11] ;
   lossCombo: number[] = [2, 8, 12];
   private _player!: User;
+
   constructor() { }
 
   pointShortResult(point: number, total: number): boolean {
@@ -22,6 +23,7 @@ export class GameService {
     }
     if (this.lossCombo.includes(total))
     return GameService.LOSS;
+    // если дошли до сюда, будет ПоинтГейм
     return total;
   }
 

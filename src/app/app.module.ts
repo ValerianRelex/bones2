@@ -11,20 +11,40 @@ import { GameComponent } from './game/game.component';
 import { HellopageComponent } from './hellopage/hellopage.component';
 import { GameService } from "./services";
 import { PointgameComponent } from './pointgame/pointgame.component';
-import {ResetInput} from "./directives/reset-input.directive";
+import { ResetInput } from "./directives/reset-input.directive";
+import { RegComponent } from './reg/reg.component';
+import { AuthComponent } from './auth/auth.component';
+import { HeaderComponent } from './header/header.component';
+
+import { CheckRegFormService } from "./services/check-reg-form.service";
+
+import { FlashMessagesModule } from "angular2-flash-messages";
+import { AuthService } from "./services/auth.service";
+import { HttpClientModule } from "@angular/common/http";
+import {IsLoggedGuard} from "./isLogged.guard";
 
 @NgModule({
     declarations: [
-        AppComponent, RulesComponent, GameComponent, HellopageComponent, PointgameComponent, ResetInput
+        AppComponent,
+        RulesComponent,
+        GameComponent,
+        HellopageComponent,
+        PointgameComponent,
+        ResetInput,
+        RegComponent,
+        AuthComponent,
+        HeaderComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         NgbModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        FlashMessagesModule.forRoot(),
+        HttpClientModule
     ],
-    providers: [GameService],
+    providers: [GameService, CheckRegFormService, AuthService, IsLoggedGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

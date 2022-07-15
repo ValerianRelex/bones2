@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {filter, interval, map, take, tap} from "rxjs";
 
 @Component({
     selector: 'app-root',
@@ -16,15 +15,15 @@ import {filter, interval, map, take, tap} from "rxjs";
         `
             <nav>
                 <img [src]="imgUrl">
-                
                 <p [style.color]='myColor' (click)="changeColor('blue')">CRAPS - Игра в кости!</p>
             </nav>
-            <div>
+            <app-header></app-header>
+            <div class="container" >
+                <flash-messages></flash-messages>
                 <router-outlet></router-outlet>
             </div>
         `
 })
-
 
 export class AppComponent {
     myColor: string = 'red';
@@ -41,13 +40,3 @@ export class AppComponent {
         }
     }
 }
-
-// const stream$ = interval(1000)
-//     .pipe(
-//         tap(v => console.log('Tap: ', v)),
-//         take(5),
-//         map(v => v*3),
-//         filter(v => v % 2 === 0)
-//     )
-//
-// stream$.subscribe( response => console.log('Next: ', response))
